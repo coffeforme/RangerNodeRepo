@@ -1,0 +1,34 @@
+{
+  "name": "ranger-core",
+  "version": "1.0.0",
+  "description": "Core del aplicativo #Ranger",
+  "main": "index.js",
+  "scripts": {
+    "start":"nodemon index.js",
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coffeforme/RangerNodeRepo.git"
+  },
+  "keywords": [
+    "Ranger",
+    "Core"
+  ],
+  "author": "Natural Code",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "jwt-simple": "^0.5.5",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.5",
+    "nodemon": "^1.18.4"
+  },
+  "bugs": {
+    "url": "https://github.com/coffeforme/RangerNodeRepo/issues"
+  },
+  "homepage": "https://github.com/coffeforme/RangerNodeRepo#readme"
+}
