@@ -4,9 +4,7 @@
   "description": "Core del aplicativo #Ranger",
   "main": "index.js",
   "scripts": {
-    "start": "npm index.js",
-    "serve": "nodemon index.js",
-    "test": "nodemon index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
