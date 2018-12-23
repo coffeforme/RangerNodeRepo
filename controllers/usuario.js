@@ -5,8 +5,8 @@ const service = require('../services')
 
 function login(req, res) {
     usuario.findOne({ email: req.body.email }, (err, user) => {
-        if (err) return res.status(500).send({ message: err })
-        if (!user) return res.status(404).send({ message: "El usurio no existe" })
+        if (err) return res.status(500).send({ msg: err })
+        if (!user) return res.status(404).send({ msg: "El usurio no existe" })
         return user.comparePassword(req.body.pass, (err, isMatch) => {
             if (err) return res.status(500).send({ msg: `Error al ingresar: ${err}` })
             if (!isMatch) return res.status(404).send({ msg: `Error de contraseña: ${req.body.email}` })
