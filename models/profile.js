@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const PerfilSchema = Schema({
     nombre: { type: String },
     fechaNacimiento: { type: Date },
-    moto: { MotoSchema },
+    moto: { type: MotoSchema },
     fechaCreacion: { type: Date, default: Date.now() },
     ultimoIngreso: Date
 })
