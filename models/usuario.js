@@ -1,13 +1,15 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const ProfileSchema = require('./profile')
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 
 const UsuarioSchema = Schema({
     email: { type: String, unique: true, lowercase: true },
-    user: { type: String, unique: true },
+    user: { type: String, unique: true, lowercase: true },
+    profile: { type: ProfileSchema },
     avatar: String,
     pass: { type: String, select: false },
     fechaCreacion: { type: Date, default: Date.now() },
@@ -41,4 +43,4 @@ UsuarioSchema.methods.comparePassword = function (candidatePassword, cb) {
     });
 }
 
-module.exports = mongoose.model('Usuario', UsuarioSchema)
+module.exports = mongoose.model('users', UsuarioSchema)
