@@ -15,21 +15,14 @@ const perfilSchema = Schema({
     birth: { type: Date },
     genre: { type: String, enum: ['male', 'female'] },
     dateCreated: { type: Date, default: Date.now() },
-    complete: Boolean,
+    complete: { type: Boolean, default: false },
     lastDate: { type: Date }
 })
 
 const usuarioSchema = Schema({
     email: { type: String, unique: true, lowercase: true },
     user: { type: String, unique: true, lowercase: true },
-    profile: {
-        name: String,
-        birth: { type: Date },
-        genre: { type: String, enum: ['male', 'female'] },
-        dateCreated: { type: Date, default: Date.now() },
-        complete: { type: Boolean, default: false },
-        lastDate: { type: Date }
-    },
+    profile: perfilSchema,
     avatar: String,
     pass: { type: String, select: false },
     fechaCreacion: { type: Date, default: Date.now() },

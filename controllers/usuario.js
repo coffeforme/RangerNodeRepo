@@ -27,16 +27,16 @@ function getProfile(req, res) {
 }
 
 function createProfile(req, res) {
+    const profile = new usuario.Profile();
+    profile.name = req.body.name;
+    profile.birth = req.body.birth;
+    profile.genre = req.body.genre;
+    profile.complete = true;
+    profile.lastDate = Date.now();
     usuario.User.findOne({ _id: req.user }, (err, doc) => {
         if (err) return res.status(500).send({ msg: err });
-        console.log(req.body)
-        doc.profile = {
-            name: req.body.name, 
-            birth: req.body.birth,
-            genre: req.body.genre,
-            complete: true,
-            lastDate: Date.now()
-        };
+
+        doc.profile = profile;
         doc.save((err) => {
             if (err) return res.status(500).send({ msg: `Error al crear tu perfil ${err}` })
 
