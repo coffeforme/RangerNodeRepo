@@ -9,5 +9,9 @@ const apiauth = express.Router()
 apiauth.post('/login', UsuarioController.login)
 apiauth.post('/register', UsuarioController.register)
 
-module.exports.apiauth = apiauth
+const apiuser = express.Router()
+apiuser.get('/profile', UsuarioController.getProfile)
+apiuser.post('/create', UsuarioController.createProfile)
+
+module.exports = { apiauth, apiuser }
 

@@ -11,17 +11,25 @@ const motoSchema = Schema({
 })
 
 const perfilSchema = Schema({
-    name: { type: String },
+    name: String,
     birth: { type: Date },
-    moto: { type: Schema.Types.ObjectId, ref: 'moto' },
+    genre: { type: String, enum: ['male', 'female'] },
     dateCreated: { type: Date, default: Date.now() },
+    complete: Boolean,
     lastDate: { type: Date }
 })
 
 const usuarioSchema = Schema({
     email: { type: String, unique: true, lowercase: true },
     user: { type: String, unique: true, lowercase: true },
-    profile: { type: Schema.Types.ObjectId, ref: 'profile' },
+    profile: {
+        name: String,
+        birth: { type: Date },
+        genre: { type: String, enum: ['male', 'female'] },
+        dateCreated: { type: Date, default: Date.now() },
+        complete: { type: Boolean, default: false },
+        lastDate: { type: Date }
+    },
     avatar: String,
     pass: { type: String, select: false },
     fechaCreacion: { type: Date, default: Date.now() },
@@ -57,4 +65,4 @@ usuarioSchema.methods.comparePassword = function (candidatePassword, cb) {
 const Moto = mongoose.model('moto', motoSchema);
 const Profile = mongoose.model('profile', perfilSchema);
 const User = mongoose.model('user', usuarioSchema);
-module.exports = User
+module.exports = { User, Moto, Profile }

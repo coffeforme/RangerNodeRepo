@@ -4,12 +4,13 @@ const usuario = require('../models/usuario')
 const service = require('../services')
 
 function login(req, res) {
-    usuario.findOne({ email: req.body.email }, (err, user) => {
+    usuario.User.findOne({ user: req.body.user }, (err, user) => {
+        console.log(user);
         if (err) return res.status(500).send({ msg: err })
         if (!user) return res.status(404).send({ msg: "El usurio no existe" })
         return user.comparePassword(req.body.pass, (err, isMatch) => {
             if (err) return res.status(500).send({ msg: `Error al ingresar: ${err}` })
-            if (!isMatch) return res.status(404).send({ msg: `Error de contraseña: ${req.body.email}` })
+            if (!isMatch) return res.status(404).send({ msg: `Error de contraseña: ${req.body.user}` })
 
             req.user = user
             return res.status(200).send({ msg: 'Te has logueado correctamente', token: service.createToken(user) })
@@ -18,8 +19,34 @@ function login(req, res) {
     }).select('_id email +pass');
 }
 
+function getProfile(req, res) {
+    usuario.User.findOne({ _id: req.user }, (err, resp) => {
+        if (err) return res.status(500).send({ msg: err })
+        return res.status(200).send({ profile: resp.profile || null })
+    }).select('profile');
+}
+
+function createProfile(req, res) {
+    usuario.User.findOne({ _id: req.user }, (err, doc) => {
+        if (err) return res.status(500).send({ msg: err });
+        console.log(req.body)
+        doc.profile = {
+            name: req.body.name, 
+            birth: req.body.birth,
+            genre: req.body.genre,
+            complete: true,
+            lastDate: Date.now()
+        };
+        doc.save((err) => {
+            if (err) return res.status(500).send({ msg: `Error al crear tu perfil ${err}` })
+
+            res.status(200).send({ msg: "Continuemos!" })
+        });
+    })
+}
+
 function register(req, res) {
-    const user = new usuario();
+    const user = new usuario.User();
     user.email = req.body.email;
     user.user = req.body.user;
     user.pass = req.body.pass;
@@ -33,5 +60,7 @@ function register(req, res) {
 
 module.exports = {
     login,
-    register
+    register,
+    getProfile,
+    createProfile
 }
