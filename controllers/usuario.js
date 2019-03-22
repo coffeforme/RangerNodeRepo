@@ -45,6 +45,23 @@ function createProfile(req, res) {
     })
 }
 
+function omitir(req, res) {
+    console.log("ok")
+    const profile = new usuario.Profile();
+    profile.complete = true;
+    profile.lastDate = Date.now();
+    usuario.User.findOne({ _id: req.user }, (err, doc) => {
+        if (err) return res.status(500).send({ msg: err });
+
+        doc.profile = profile;
+        doc.save((err) => {
+            if (err) return res.status(500).send({ msg: `Error al crear tu perfil ${err}` })
+
+            res.status(200).send({ msg: "Continuemos!" })
+        });
+    })
+}
+
 function register(req, res) {
     const user = new usuario.User();
     user.email = req.body.email;
@@ -62,5 +79,6 @@ module.exports = {
     login,
     register,
     getProfile,
-    createProfile
+    createProfile,
+    omitir
 }
